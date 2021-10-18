@@ -5,24 +5,21 @@
   </head>
   <body>
     <header>
-      <div class="container">
-        <strong><nav>
-          <ul class="menu">
-            <li><a href="{{ url_for('get_home') }}">Home</a></li>
-            <li><a href="{{ url_for('get_book')}}">Book</a></li>
-            <li style="float:right">  <div class="dropdown">
-              <button class="dropbtn">Dropdown 
-                <i class="fa fa-caret-down"></i>
-              </button>
-              <div class="dropdown-content">
-                <a href="#">Link 1</a>
-                <a href="#">Link 2</a>
-                <a href="#">Link 3</a>
-              </div>
-            </li>
-          </ul>
-        </nav></strong>
-      </div>
+      <strong><nav>
+        <ul class="menu">
+          <li><a href="{{ url_for('get_home') }}">Home</a></li>
+          <li><a href="{{ url_for('get_book')}}">Book</a></li>
+          <li style="float:right">  <div class="dropdown">
+            <button class="dropbtn"> 
+              <img src="" alt="0">
+            </button>
+            <div class="dropdown-content">
+              <a href="#">Profile</a>
+              <a href="#">Sign Out</a>
+            </div>
+          </li>
+        </ul>
+      </nav></strong>
     </header>
     <div class="container">
       {% block content %}

@@ -34,4 +34,6 @@ def get_home():
 
 
 if __name__ == '__main__':
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
+    app.config['FLASK_DEBUG'] = 1
     app.run(debug=True)
