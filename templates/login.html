@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div id = "loginContainer">
+    <form class = "Login" method = "POST">
+        <label class = "formLabel" for="username">Username:</label><br>
+        <input type="text" id="username" name= "username" value="James Hype"><br><br>
+        <label class = "formLabel" for="password">Password:</label><br>
+        <input type="password" name = "password" id="password" value="Pssword1"><br><br>
+        <input type="submit" value="Submit">
+      </form>
+</div>
+
+{% endblock %}

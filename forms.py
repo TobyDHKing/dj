@@ -6,14 +6,16 @@ class LoginForm():
 
     def validateUsername(self):
         length = len(self.username)
-        if (not(length < 4)and not(length > 25)):
+        print(length , "username")
+        if (not(length > 4)and not(length > 25)):
             return False
         else:
             return True
 
     def validatePassword(self):
         length = len(self.password)
-        if (not(length < 4)and not(length > 25)):
+        print(length , "password")
+        if (not(length > 4)and not(length > 25)):
             return False
         else:
             return True
@@ -21,3 +23,9 @@ class LoginForm():
     def validateAll(self):
         if (self.validatePassword() and self.validateUsername()):
             return True
+        elif (not self.validatePassword() and self.validateUsername()): 
+            return "pass"
+        elif (not self.validateUsername() and self.validatePassword()): 
+            return "Username"
+        elif (not self.validateUsername() and not self.validatePassword()):
+            return "both"
