@@ -1,18 +1,24 @@
-from flask import Flask
-from flask import render_template
+from flask import Flask,render_template,current_app, g,request
 from werkzeug.wrappers import CommonRequestDescriptorsMixin, Request
-from flask_bootstrap import Bootstrap
-from flask_nav import Nav
-from flask import request
-from flask_nav.elements import *
 from forms import LoginForm
-from flask import current_app, g
 from flask.cli import with_appcontext
 import sqlite3
+from db import db
 
-app = Flask(__name__)
+def create_app():
+    app = Flask(__name__)
 
+    
+    db.init_app(app)
 
+    return app
+app = create_app()
+
+app.config.update(
+    TESTING=True,
+    SECRET_KEY=b'_5#y2L"F4Q8z\n\xec]/',
+    DB_NAME="djapp"
+)
 
 @app.route('/book')
 def get_book():
@@ -22,6 +28,7 @@ def get_book():
 @app.route('/')
 @app.route('/home')
 def get_home():
+    get_db()
     return(render_template('home.html'))
 
 @app.route('/login', methods = ['GET','POST'])
@@ -56,6 +63,7 @@ def close_db(e=None):
 
 
 if __name__ == '__main__':
+    
     app.config['TEMPLATES_AUTO_RELOAD'] = True
     app.config['FLASK_DEBUG'] = 1
     app.run(debug=True)
