@@ -1,9 +1,10 @@
-from flask import Flask,render_template,current_app, g,request
+from flask import Flask,render_template,current_app,request
 from werkzeug.wrappers import CommonRequestDescriptorsMixin, Request
 from forms import LoginForm
 from flask.cli import with_appcontext
 import sqlite3
-from db import db
+import db
+
 
 def create_app():
     app = Flask(__name__)
@@ -17,7 +18,8 @@ app = create_app()
 app.config.update(
     TESTING=True,
     SECRET_KEY=b'_5#y2L"F4Q8z\n\xec]/',
-    DB_NAME="djapp"
+    DB_NAME="djapp.db",
+    DATABASE = "djapp.db",
 )
 
 @app.route('/book')
@@ -28,37 +30,23 @@ def get_book():
 @app.route('/')
 @app.route('/home')
 def get_home():
-    get_db()
     return(render_template('home.html'))
 
 @app.route('/login', methods = ['GET','POST'])
 def get_login():
+
     username = request.form.get('username')
     password = request.form.get('password')
+
     print( username, password)
     form = LoginForm(username,password)
     if request.method == 'POST':
-        print('post')
-        print(form.validateAll())
-    #form = LoginForm(request.form)
-    return(render_template('login.html'))
-
-def get_db():
-    if 'db' not in g:
-        g.db = sqlite3.connect(
-            current_app.config['DATABASE'],
-            detect_types=sqlite3.PARSE_DECLTYPES
-        )
-        g.db.row_factory = sqlite3.Row
-
-    return g.db
-
-
-def close_db(e=None):
-    db = g.pop('db', None)
-
-    if db is not None:
-        db.close()
+        if form.validateAll() == False:
+            print("login error")
+            return(render_template('login.html',error="Error, Invalid Username or Password"))
+        else:
+            return(render_template('login.html',error="Success"))
+    return(render_template('login.html',error=""))
 
 
 

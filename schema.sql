@@ -1,11 +1,11 @@
-DROP TABLE IF EXISTS user;
-DROP TABLE IF EXISTS post;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS bookings;
 
 CREATE TABLE users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  username TEXT UNIQUE NOT NULL,
-  password TEXT NOT NULL,
-  type TEXT NOT NULL,
+  username varchar(255) UNIQUE NOT NULL,
+  password varchar(255) NOT NULL,
+  type varchar(255) NOT NULL
 );
 
 CREATE TABLE bookings (
@@ -13,3 +13,5 @@ CREATE TABLE bookings (
   booker_id INTEGER NOT NULL,
   created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (booker_id) REFERENCES user (id)
+);
+
