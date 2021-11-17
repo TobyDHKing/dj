@@ -66,6 +66,14 @@ li a:hover:not(.active) {
     z-index: 1;
 }
 
+.dropdownImg a:hover {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 22%;
+    color: greenyellow
+}
+
 .dropdown-content a {
     float: none;
     color: rgb(240, 240, 240);

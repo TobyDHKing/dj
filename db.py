@@ -35,6 +35,8 @@ def testdata_db():
         c.executescript(decode)
     db.commit()
 
+
+
 def init_db():
     db = get_db()
 
@@ -58,7 +60,40 @@ def init_db_command():
     for row in cur.execute('SELECT * FROM users'):
         print(row['username'])
 
-
 def init_app(app):
+    print("this ran")
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
+
+def db_getUser(username):
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("SELECT * FROM users where username = (?)", [username])
+    userInfo = list(cur.fetchone())
+    return userInfo
+
+def db_getDJ(id):
+    db = get_db()
+    cur = db.cursor()
+    print(id)
+    cur.execute("SELECT * FROM djs where user_id = (?)", [id])
+    djinfo = list(cur.fetchone())
+    return djinfo
+
+
+def db_getCustomerBookings(id):
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("SELECT * FROM bookings where booker_id = (?)", [id])
+    bookings = list(cur.fetchone())
+    return bookings
+
+def db_getDJBookings(id):
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("SELECT * FROM bookings where dj_id = (?)", [id])
+    bookings = list(cur.fetchone())
+    return bookings
+
+
+

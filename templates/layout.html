@@ -9,13 +9,23 @@
         <ul class="menu">
           <li><a href="{{ url_for('get_home') }}">Home</a></li>
           <li><a href="{{ url_for('get_book')}}">Book</a></li>
+          {% if loggedIn %}
           <li style="float:right">  <div class="dropdown">
+
             <button class="dropbtn"> 
-              <img src="" alt="0">
+              <img style = "  display: block;
+              margin-left: auto;
+              margin-right: auto;
+              width: 22%;" class = "dropdownImg" src="https://cdn-icons.flaticon.com/png/512/552/premium/552848.png?token=exp=1637141310~hmac=0df767bb470b9b832f8ff4efa589cd51" alt="0">
             </button>
+            
             <div class="dropdown-content">
-              <a href="#">Profile</a>
-              <a href="#">Sign Out</a>
+              
+              <a href="/profile">Profile</a>
+              <a href="/signout">Sign Out</a>
+            {% else %}
+            <li style="float:right"><a href="{{ url_for('get_login')}}">Login</a></li>
+            {%endif%}
             </div>
           </li>
         </ul>
