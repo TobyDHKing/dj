@@ -3,10 +3,10 @@ import click
 from flask import current_app
 from flask.cli import with_appcontext
 
-db = None
+
 
 def get_db():
-    global db
+    db = None
     if not db:
         try:
             db = sqlite3.connect(
@@ -20,7 +20,7 @@ def get_db():
 
 
 def close_db(e=None):
-    global db
+    db = get_db()
     if db is not None:
         db.close()
         db = None
@@ -79,6 +79,14 @@ def db_getDJ(id):
     cur.execute("SELECT * FROM djs where user_id = (?)", [id])
     djinfo = list(cur.fetchone())
     return djinfo
+
+def db_getDJs():
+    db = get_db()
+    cur = db.cursor()
+    print(id)
+    cur.execute("SELECT * FROM djs")
+    djs = list(cur.fetchone())
+    return djs
 
 
 def db_getCustomerBookings(id):

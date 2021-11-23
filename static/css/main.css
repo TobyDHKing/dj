@@ -158,3 +158,54 @@ input[type=submit]:hover{
     outline: 3px solid #97D700;
     outline-offset: -3px;
 } 
+
+#djListHeader {
+    background-color: #393939;
+
+    color: white;
+    text-decoration: none;
+    font-size: 20px;  
+    font-family: 'Courier New', Courier, monospace;
+    text-align: left;
+}
+
+.djContainer{
+    background-color: #393939;
+
+    color: white;
+    height:120px;
+    margin: 30px 30px;
+    border-radius: 15px;
+    text-align: left;
+    text-indent: 35px;
+    padding: 20px;
+
+
+}
+
+.button{
+    float: right;
+}
+
+div a {
+    outline: 2px solid #DCDCDC;
+    outline-offset: -2px;
+    text-decoration: inherit;
+    display: block;
+    color:#DCDCDC;
+    text-align: center;
+    padding: 14px 16px;
+    border-radius: 15px;
+}
+
+div a:hover:not(.active) {
+    color:#97D700;
+    outline: 2px solid #97D700;
+    outline-offset: -2px;
+}
+
+.fix-nav{position:fixed; z-index: 10; top: 0; width:100%;}
+
+.fix-div{position:fixed; z-index: 10; top: 0 ; height:160px; width:100%; margin-top: 50px}
+
+.wrapper{position: relative; z-index: 1; height:60% ; width: 100%; margin-top:240px}

@@ -36,7 +36,18 @@ def get():
 
 @app.route('/book')
 def get_book():
-    return(render_template('book.html'))
+    
+    if  'userinfo' in session:
+        djlist = db.db_getDJs()
+        for i in djlist:
+            print(i)
+
+
+        return(render_template('book.html', loggedIn = True))
+    else:
+        return(render_template('book.html',loggedIn = False))
+
+    
 
 
 @app.route('/')
@@ -78,7 +89,6 @@ def get_login():
             return(redirect(url_for('get_home')))
 
     return(render_template('login.html',error=""))
-
 
 
 if __name__ == '__main__':
