@@ -185,6 +185,8 @@ input[type=submit]:hover{
 
 .button{
     float: right;
+
+    align-content: left;
 }
 
 div a {
@@ -194,6 +196,7 @@ div a {
     display: block;
     color:#DCDCDC;
     text-align: center;
+    position: relative;
     padding: 14px 16px;
     border-radius: 15px;
 }

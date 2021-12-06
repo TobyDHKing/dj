@@ -12,3 +12,6 @@ VALUES ('Fusion', 'Password1!', 'customer', 4);
 
 INSERT or REPLACE INTO djs (id,user_id,bio,genres)
 VALUES (1,1,'This is James Hypes text for bio','1,2,3');
+
+INSERT or REPLACE INTO djs (id,user_id,bio,genres)
+VALUES (2,2,'This is DJ Guv text for bio','1,2,3');

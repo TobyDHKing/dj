@@ -38,12 +38,18 @@ def get():
 def get_book():
     
     if  'userinfo' in session:
-        djlist = db.db_getDJs()
+        djlist,cur = db.db_getDJs()
+        djList = [[]]
+        print(djlist)
         for i in djlist:
+         
+            user = db.db_getUserId(i[1])
+    
+            arr = [i[2],i[3],user[1]]
+            djList += [arr]
             print(i)
-
-
-        return(render_template('book.html', loggedIn = True))
+        print(djList)
+        return(render_template('book.html', loggedIn = True, djList = djList))
     else:
         return(render_template('book.html',loggedIn = False))
 

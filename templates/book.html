@@ -5,16 +5,20 @@
 <div class="fix-div" id = "djListHeader">
     <p style="margin: 30px 30px;">Book A DJ</p>
 </div>
-    {%block djList %}
+
+
     <div class = "wrapper">
+        {%for dj in djList %}
         <div class = "djContainer">
-            <p>James hype</p>
-            <a class = "button">book</a>
+            <p>{{dj.2}}</p>
+            <p>{{dj.0}}</p>
+            <br>
+            <p>{{dj.1}}</p>
+            <a class= "button">book</a>
             
         </div>
-
+        {% endfor %}
     </div>
-    {% endblock %}
 
 
 {% endblock %}

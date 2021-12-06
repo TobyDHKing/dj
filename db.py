@@ -72,6 +72,13 @@ def db_getUser(username):
     userInfo = list(cur.fetchone())
     return userInfo
 
+def db_getUserId(id):
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("SELECT * FROM users where id = (?)", [id])
+    userInfo = list(cur.fetchone())
+    return userInfo
+
 def db_getDJ(id):
     db = get_db()
     cur = db.cursor()
@@ -83,10 +90,9 @@ def db_getDJ(id):
 def db_getDJs():
     db = get_db()
     cur = db.cursor()
-    print(id)
-    cur.execute("SELECT * FROM djs")
-    djs = list(cur.fetchone())
-    return djs
+    djs = cur.execute("SELECT * FROM djs")
+
+    return djs , cur
 
 
 def db_getCustomerBookings(id):
