@@ -10,11 +10,10 @@ def get_db():
     if not db:
         try:
             db = sqlite3.connect(
-                current_app.config['DATABASE'])
-        except Error as e:
+                current_app.config['DATABASE'] )
+        except Exception as e:
             print(e)
-            print("nooo")
-        db.row_factory = sqlite3.Row
+        #db.row_factory = sqlite3.Row
 
     return db
 
@@ -58,7 +57,7 @@ def init_db_command():
     db = get_db()
     cur = db.cursor()
     for row in cur.execute('SELECT * FROM users'):
-        print(row['username'])
+        print(row)
 
 def init_app(app):
     print("this ran")
@@ -92,7 +91,7 @@ def db_getDJs():
     cur = db.cursor()
     djs = cur.execute("SELECT * FROM djs")
 
-    return djs , cur
+    return djs
 
 
 def db_getCustomerBookings(id):

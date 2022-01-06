@@ -183,6 +183,20 @@ input[type=submit]:hover{
 
 }
 
+.booking{
+    background-color: #393939;
+
+    color: white;
+    height: 80%;
+    margin: 160px 100px;
+    border-radius: 15px;
+    text-align: left;
+    text-indent: 35px;
+    padding: 20px;
+
+
+}
+
 .button{
     float: right;
 

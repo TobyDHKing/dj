@@ -6,9 +6,8 @@ from flask.cli import with_appcontext
 import sqlite3
 import db
 import user
-users = {
 
-}
+
 def create_app():
     app = Flask(__name__)
 
@@ -21,8 +20,7 @@ app = create_app()
 app.config.update(
     TESTING=True,
     SECRET_KEY=b'_5#y2L"F4Q8z\n\xec]/',
-    DB_NAME="djapp.db",
-    DATABASE = "djapp.db",
+    DATABASE = "dj/djapp.db",
 )
 
 @app.route('/set/')
@@ -36,12 +34,12 @@ def get():
 
 @app.route('/book')
 def get_book():
-    
+    print(1)
     if  'userinfo' in session:
-        djlist,cur = db.db_getDJs()
-        djList = [[]]
-        print(djlist)
-        for i in djlist:
+        djs = db.db_getDJs()
+        djList = []
+        print(djs)
+        for i in djs:
          
             user = db.db_getUserId(i[1])
     
@@ -53,7 +51,23 @@ def get_book():
     else:
         return(render_template('book.html',loggedIn = False))
 
-    
+@app.route('/book/confirm')
+def  get_confirm():
+    if  'userinfo' in session:
+        dj = request.args['dj']
+
+        return(render_template("bookconfirm.html",loggedIn = True , dj = dj))
+
+    else:
+        return(redirect(url_for('get_home',loggedIn = False )))
+
+
+@app.route('/signout')  
+def  get_signout():
+    if  'userinfo' in session:
+        session.pop("userinfo")
+        return(redirect(url_for('get_home',loggedIn = False)))
+
 
 
 @app.route('/')

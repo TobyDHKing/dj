@@ -14,7 +14,7 @@
             <p>{{dj.0}}</p>
             <br>
             <p>{{dj.1}}</p>
-            <a class= "button">book</a>
+            <a class= "button" href = "{{ url_for('get_confirm', dj = dj.2)}}">book</a>
             
         </div>
         {% endfor %}
