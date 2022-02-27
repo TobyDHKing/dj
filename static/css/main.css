@@ -214,6 +214,28 @@ div a {
     padding: 14px 16px;
     border-radius: 15px;
 }
+.current {
+    outline: 2px solid #97D700;
+    outline-offset: -2px;
+    text-decoration: inherit;
+    display: block;
+    color:#97D700;
+    text-align: center;
+    position: relative;
+    padding: 14px 16px;
+    border-radius: 15px;
+}
+.normal {
+    outline: 2px solid #DCDCDC;
+    outline-offset: -2px;
+    text-decoration: inherit;
+    display: block;
+    color:#DCDCDC;
+    text-align: center;
+    position: relative;
+    padding: 14px 16px;
+    border-radius: 15px;
+}
 
 div a:hover:not(.active) {
     color:#97D700;

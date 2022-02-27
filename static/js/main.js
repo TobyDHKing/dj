@@ -18,7 +18,7 @@ const months = [
 ];
 
 function getDaysInMonth (month, year) {
-    return new Date(year, month+1, 0).getDate();
+    return new Date(year, month,0).getDate();
 }
 
 var currentDate = date.getDate();
@@ -28,8 +28,8 @@ var currentYear = date.getFullYear();
 
 
 function createCalender(){
-    daysInMonth = getDaysInMonth(currentMonth, currentYear);
-    days = "";
+    let daysInMonth = getDaysInMonth(currentMonth, currentYear);
+    let days = "";
     for (let i = 1; i <= daysInMonth; i++) {
         if (i == currentDate){
             days += `<div class = "current" onclick = "selectdate(this)">${i}</div>`;
@@ -43,8 +43,15 @@ function createCalender(){
 }
 
 function selectdate(element){
-    currentDate = element.innerHTML;
+    let oldElement = document.getElementsByClassName("current");
+    console.log(oldElement)
+    oldElement[0].className = "normal";
+
+    element.className = "current" ;
+    let currentDate = element.innerHTML;
     console.log(currentDate)
+    
+    
 }
 
 function nextMonth(){
