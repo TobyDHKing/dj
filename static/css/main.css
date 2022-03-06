@@ -222,7 +222,7 @@ div a {
     color:#97D700;
     text-align: center;
     position: relative;
-    padding: 14px 16px;
+    padding: 2px 4px;
     border-radius: 15px;
 }
 .normal {
@@ -233,7 +233,7 @@ div a {
     color:#DCDCDC;
     text-align: center;
     position: relative;
-    padding: 14px 16px;
+    padding: 2px 4px;
     border-radius: 15px;
 }
 

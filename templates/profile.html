@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="fix-div" id = "djListHeader" >
+    <br>
+    <div class ="username">{{user.username}}</div>
+    <br>
+    <div class ="bio">{{user.bio}}</div>
+    <br>
+    <div class ="genres">{{user.genres}}</div>
+    
+</div>
+
+<div class = "wrapper">
+    {%for booking in bookings %}
+    <div class = "djContainer">
+        <p>{{booking.1}}</p>
+        <p>{{dj.2}}</p>
+        <br>
+        <p>{{dj.1}}</p>
+        <a class= "button" href = "{{ url_for('get_confirm', dj = dj.2)}}">book</a>
+        
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

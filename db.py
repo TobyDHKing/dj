@@ -68,7 +68,9 @@ def db_getUser(username):
     db = get_db()
     cur = db.cursor()
     cur.execute("SELECT * FROM users where username = (?)", [username])
-    userInfo = list(cur.fetchone())
+    
+    try: userInfo = list(cur.fetchone())
+    except: return False
     return userInfo
 
 def db_getUserId(id):

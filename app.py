@@ -34,22 +34,18 @@ def get():
 
 @app.route('/book')
 def get_book():
-    print(1)
-    if  'userinfo' in session:
-        djs = db.db_getDJs()
-        djList = []
-        print(djs)
-        for i in djs:
-         
-            user = db.db_getUserId(i[1])
-    
-            arr = [i[2],i[3],user[1]]
-            djList += [arr]
-            print(i)
-        print(djList)
-        return(render_template('book.html', loggedIn = True, djList = djList))
-    else:
-        return(render_template('book.html',loggedIn = False))
+    djs = db.db_getDJs()
+    djList = []
+    print(djs)
+    for i in djs:
+        
+        user = db.db_getUserId(i[1])
+
+        arr = [i[2],i[3],user[1]]
+        djList += [arr]
+        print(i)
+    print(djList)
+    return(render_template('book.html', djList = djList))
 
 @app.route('/book/confirm')
 def  get_confirm():
@@ -88,8 +84,10 @@ def get_login():
         print( username, password)
         form = LoginForm(username,password)
         userInfo = db.db_getUser(username = username)
-
-        if form.validateAll() == False:
+        if userInfo:
+            correctPass = (userInfo[2] == password)
+        print(userInfo)
+        if form.validateAll() == False or not userInfo or not correctPass:
             print("login error")
             return(render_template('login.html',error="Error, Invalid Username or Password"))
         else:
@@ -105,11 +103,17 @@ def get_login():
                 session['userinfo'] = userInfo
                 #print(session['userinfo'] )
                 #users[username] = user.dj(username,userInfo[1],djInfo[2],djInfo[3])
-                # make login fuction that deals with sql and create user object relative to user type
             return(redirect(url_for('get_home')))
 
     return(render_template('login.html',error=""))
 
+@app.route('/profile')
+def get_profile():
+    if  'userinfo' in session:
+        return(render_template('profile.html',user = session['userinfo'],loggedIn = True))
+
+    else:
+        return(render_template('login.html',error=""))
 
 if __name__ == '__main__':
     
