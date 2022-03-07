@@ -77,7 +77,9 @@ def db_getUserId(id):
     db = get_db()
     cur = db.cursor()
     cur.execute("SELECT * FROM users where id = (?)", [id])
-    userInfo = list(cur.fetchone())
+   
+    try: userInfo = list(cur.fetchone())
+    except: return False
     return userInfo
 
 def db_getDJ(id):
@@ -85,8 +87,9 @@ def db_getDJ(id):
     cur = db.cursor()
     print(id)
     cur.execute("SELECT * FROM djs where user_id = (?)", [id])
-    djinfo = list(cur.fetchone())
-    return djinfo
+    try: DJInfo = list(cur.fetchone())
+    except: return False
+    return DJInfo
 
 def db_getDJs():
     db = get_db()
@@ -100,14 +103,25 @@ def db_getCustomerBookings(id):
     db = get_db()
     cur = db.cursor()
     cur.execute("SELECT * FROM bookings where booker_id = (?)", [id])
-    bookings = list(cur.fetchone())
+    try: bookings = list(cur.fetchall())
+    except: return False
     return bookings
 
 def db_getDJBookings(id):
     db = get_db()
     cur = db.cursor()
     cur.execute("SELECT * FROM bookings where dj_id = (?)", [id])
-    bookings = list(cur.fetchone())
+    try: bookings = list(cur.fetchall()) 
+    except: return False
+    print(bookings)
+    return bookings
+
+def getAllBookings():
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("SELECT * FROM bookings")
+    try: bookings = list(cur.fetchall())
+    except: return False
     return bookings
 
 

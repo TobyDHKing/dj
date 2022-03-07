@@ -96,13 +96,20 @@ def get_login():
                 userInfo = {
                     "type" : "dj",
                     "username" : username,
-                    "id": userInfo[1],
+                    "id": userInfo[0],
                     "bio": djInfo[2],
                     "genres": djInfo[3],
                 }
                 session['userinfo'] = userInfo
                 #print(session['userinfo'] )
                 #users[username] = user.dj(username,userInfo[1],djInfo[2],djInfo[3])
+            else:
+                userInfo = {
+                    "type" : userInfo[3],
+                    "username" : username,
+                    "id": userInfo[0],
+                }
+                session['userinfo'] = userInfo
             return(redirect(url_for('get_home')))
 
     return(render_template('login.html',error=""))
@@ -110,7 +117,20 @@ def get_login():
 @app.route('/profile')
 def get_profile():
     if  'userinfo' in session:
-        return(render_template('profile.html',user = session['userinfo'],loggedIn = True))
+        if session['userinfo']['type'] == 'dj':
+            bookings = db.db_getDJBookings(session['userinfo']['id'])
+            print("here buddy")
+            print(session['userinfo']['id'])
+            print(bookings)
+        elif (session['userinfo']['type'] == 'customer'):
+            bookings = db.db_getCustomerBookings(session['userinfo']['id'])
+        else:
+            bookings = db.getAllBookings()
+        
+        if not bookings :
+            bookings = []
+
+        return(render_template('profile.html',user = session['userinfo'],loggedIn = True, bookings = bookings))
 
     else:
         return(render_template('login.html',error=""))
