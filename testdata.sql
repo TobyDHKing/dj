@@ -8,13 +8,19 @@ INSERT or REPLACE INTO users (username, password, type, id)
 VALUES ('Admin', 'Password1!', 'admin', 3);
 
 INSERT or REPLACE INTO users (username, password, type, id)
-VALUES ('Fusion', 'Password1!', 'customer', 4);
+VALUES ('Born On Road', 'Normz1!', 'dj', 4);
+
+INSERT or REPLACE INTO users (username, password, type, id)
+VALUES ('Fusion', 'Password1!', 'customer', 5);
 
 INSERT or REPLACE INTO djs (id,user_id,bio,genres)
 VALUES (1,1,'This is James Hypes text for bio','1,2,3');
 
 INSERT or REPLACE INTO djs (id,user_id,bio,genres)
 VALUES (2,2,'This is DJ Guv text for bio','1,2,3');
+
+INSERT or REPLACE INTO djs (id,user_id,bio,genres)
+VALUES (3,4,'This is Born on Road text for bio','1,2,3');
 
 INSERT or REPLACE INTO bookings (id,booker_id,dj_id)
 VALUES (1,2,1);
