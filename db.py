@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 import sqlite3
 import click
 from flask import current_app
@@ -49,7 +50,7 @@ def init_db():
 @click.command('init-db')
 @with_appcontext
 
-def init_db_command():
+def init_command():
     #Clear the existing data and create new tables.
     init_db()
     click.echo('Initialized the database.')
@@ -62,9 +63,9 @@ def init_db_command():
 def init_app(app):
     print("this ran")
     app.teardown_appcontext(close_db)
-    app.cli.add_command(init_db_command)
+    app.cli.add_command(init_command)
 
-def db_getUser(username):
+def getUser(username):
     db = get_db()
     cur = db.cursor()
     cur.execute("SELECT * FROM users where username = (?)", [username])
@@ -73,16 +74,15 @@ def db_getUser(username):
     except: return False
     return userInfo
 
-def db_getUserId(id):
+def getUserId(id):
     db = get_db()
     cur = db.cursor()
     cur.execute("SELECT * FROM users where id = (?)", [id])
-   
     try: userInfo = list(cur.fetchone())
     except: return False
     return userInfo
 
-def db_getDJ(id):
+def getDJ(id):
     db = get_db()
     cur = db.cursor()
     print(id)
@@ -91,7 +91,7 @@ def db_getDJ(id):
     except: return False
     return DJInfo
 
-def db_getDJs():
+def getDJs():
     db = get_db()
     cur = db.cursor()
     djs = cur.execute("SELECT * FROM djs")
@@ -99,7 +99,7 @@ def db_getDJs():
     return djs
 
 
-def db_getCustomerBookings(id):
+def getCustomerBookings(id):
     db = get_db()
     cur = db.cursor()
     cur.execute("SELECT * FROM bookings where booker_id = (?)", [id])
@@ -107,7 +107,22 @@ def db_getCustomerBookings(id):
     except: return False
     return bookings
 
-def db_getDJBookings(id):
+
+def getCustomerBookings(id):
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("SELECT * FROM bookings where booker_id = (?)", [id])
+    bookings = list(cur.fetchone())
+    return bookings
+
+
+def createBookingid(customerId,djId,date):
+    db = get_db()
+    cur = db.cursor()
+    cur.execute("INSERT INTO bookings (booker_id , dj_id ,bookedfor ) VALUES((?),(?),(?))", (customerId,djId,date))
+    db.commit()
+
+def getDJBookings(id):
     db = get_db()
     cur = db.cursor()
     cur.execute("SELECT * FROM bookings where dj_id = (?)", [id])

@@ -3,7 +3,14 @@
 
 
 <div class = "booking">
-    <p>{{dj}}</p>
+    <p id="currentDj">{{dj}}</p>
+    <div class="month">
+        <ul>
+    <li class="prev">&#10094;</li>
+        <li class="next">&#10095;</li>
+        <li>August<br><span style="font-size:18px">2021</span></li>
+        </ul>
+    </div>
     <div class="calendar">
         <div class="month">
             <i class="fas fa-angle-left prev"></i>
@@ -13,20 +20,19 @@
             </div>
             <i class="fas fa-angle-right next"></i>
         </div>
-        <div class="weekdays">
-            <div>Sun</div>
-            <div>Mon</div>
-            <div>Tue</div>
-            <div>Wed</div>
-            <div>Thu</div>
-            <div>Fri</div>
-            <div>Sat</div>
-        </div>
-        <div class="days"></div>
-        </div>
     </div>
-    <a class= "button">book</a>
-    
+        <ul class="daynames">
+            <li>Mo</li>
+            <li>Tu</li>
+            <li>We</li>
+            <li>Th</li>
+            <li>Fr</li>
+            <li>Sa</li>
+            <li>Su</li>
+        </ul>
+        <ul class="days">
+        </ul>
+        <button type="button"  class="button" onclick="book()">Book</button>
 </div>
 
 <script type=text/javascript src="{{url_for('static', filename='js/main.js') }}"></script>

@@ -197,12 +197,6 @@ input[type=submit]:hover{
 
 }
 
-.button{
-    float: right;
-
-    align-content: left;
-}
-
 div a {
     outline: 2px solid #DCDCDC;
     outline-offset: -2px;
@@ -222,10 +216,12 @@ div a {
     color:#97D700;
     text-align: center;
     position: relative;
-    padding: 2px 4px;
+    width: 13.6%;
+
     border-radius: 15px;
 }
 .normal {
+    width: 13.6%;
     outline: 2px solid #DCDCDC;
     outline-offset: -2px;
     text-decoration: inherit;
@@ -233,11 +229,65 @@ div a {
     color:#DCDCDC;
     text-align: center;
     position: relative;
-    padding: 2px 4px;
+
     border-radius: 15px;
 }
 
 div a:hover:not(.active) {
+    color:#97D700;
+    outline: 2px solid #97D700;
+    outline-offset: -2px;
+}
+/* Month header */
+.month {
+    width: 100%;
+    text-align: center;
+}
+.daynames li {
+    width: 13.6%;
+}
+  /* Month list */
+.month ul {
+
+    margin: 0 ;
+    padding: 0;
+}
+
+.month ul li {
+    width: 13.6%;
+
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+  /* Previous button inside month header */
+.month .prev {
+    float: left;
+    padding-top: 10px;
+}
+
+  /* Next button */
+.month .next {
+    float: right;
+    padding-top: 10px;
+}
+.button {
+    color:#ffffff;
+    outline: 2px solid #ffffff;
+    outline-offset: -2px;
+    color:#ffffff ;
+    background-color: #393939;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.button:hover{
     color:#97D700;
     outline: 2px solid #97D700;
     outline-offset: -2px;

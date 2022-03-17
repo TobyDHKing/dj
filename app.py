@@ -1,4 +1,6 @@
+from datetime import datetime
 from flask import Flask,render_template,request,session,redirect, url_for
+import datetime
 #from flask.ext.session import Session
 from werkzeug.wrappers import CommonRequestDescriptorsMixin, Request
 from forms import LoginForm
@@ -34,12 +36,12 @@ def get():
 
 @app.route('/book')
 def get_book():
-    djs = db.db_getDJs()
+    djs = db.getDJs()
     djList = []
     print(djs)
     for i in djs:
         
-        user = db.db_getUserId(i[1])
+        user = db.getUserId(i[1])
 
         arr = [i[2],i[3],user[1]]
         djList += [arr]
@@ -57,6 +59,19 @@ def  get_confirm():
     else:
         return(redirect(url_for('get_home',loggedIn = False )))
 
+@app.route('/book/confirm/book')
+def  get_confirmbook():
+    if  'userinfo' in session:
+        dj = request.args['dj']
+        date = request.args['date']
+        id = session["userinfo"]["id"]
+        dj = db.getUser(dj)
+        dj = dj[0]
+        print((id,dj,date))
+        print(db.createBookingid(id,dj,date))
+        return(redirect(url_for('get_home',loggedIn = False )))
+    else:
+        return(redirect(url_for('get_home',loggedIn = False )))
 
 @app.route('/signout')  
 def  get_signout():
@@ -75,6 +90,7 @@ def get_home():
         return(render_template('home.html',loggedIn = False))
 
 @app.route('/login', methods = ['GET','POST'])
+
 def get_login():
     if request.method == 'POST':
         if  'userinfo' in session:
@@ -83,7 +99,7 @@ def get_login():
         password = request.form.get('password')
         print( username, password)
         form = LoginForm(username,password)
-        userInfo = db.db_getUser(username = username)
+        userInfo = db.getUser(username = username)
         if userInfo:
             correctPass = (userInfo[2] == password)
         print(userInfo)
@@ -92,7 +108,7 @@ def get_login():
             return(render_template('login.html',error="Error, Invalid Username or Password"))
         else:
             if userInfo[3] == 'dj':
-                djInfo = db.db_getDJ(userInfo[0])
+                djInfo = db.getDJ(userInfo[0])
                 userInfo = {
                     "type" : "dj",
                     "username" : username,

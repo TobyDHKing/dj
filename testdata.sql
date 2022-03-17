@@ -22,25 +22,25 @@ VALUES (2,2,'This is DJ Guv text for bio','1,2,3');
 INSERT or REPLACE INTO djs (id,user_id,bio,genres)
 VALUES (3,4,'This is Born on Road text for bio','1,2,3');
 
-INSERT or REPLACE INTO bookings (id,booker_id,dj_id)
-VALUES (1,2,1);
+INSERT or REPLACE INTO bookings (id,booker_id,dj_id,bookedfor)
+VALUES (1,2,1,'2022-03-20');
 
-INSERT or REPLACE INTO bookings (id,booker_id,dj_id)
-VALUES (2,4,2);
+INSERT or REPLACE INTO bookings (id,booker_id,dj_id,bookedfor)
+VALUES (2,4,2,'2022-03-21');
 
-INSERT or REPLACE INTO bookings (id,booker_id,dj_id)
-VALUES (3,2,1);
+INSERT or REPLACE INTO bookings (id,booker_id,dj_id,bookedfor)
+VALUES (3,2,1,'2022-03-21');
 
-INSERT or REPLACE INTO bookings (id,booker_id,dj_id)
-VALUES (4,4,2);
+INSERT or REPLACE INTO bookings (id,booker_id,dj_id,bookedfor)
+VALUES (4,4,2,'2022-03-21');
 
-INSERT or REPLACE INTO bookings (id,booker_id,dj_id)
-VALUES (5,2,1);
+INSERT or REPLACE INTO bookings (id,booker_id,dj_id,bookedfor)
+VALUES (5,2,1,'2022-03-19');
 
-INSERT or REPLACE INTO bookings (id,booker_id,dj_id)
-VALUES (6,4,2);
-INSERT or REPLACE INTO bookings (id,booker_id,dj_id)
-VALUES (7,2,1);
+INSERT or REPLACE INTO bookings (id,booker_id,dj_id,bookedfor)
+VALUES (6,4,2,'2022-03-22');
+INSERT or REPLACE INTO bookings (id,booker_id,dj_id,bookedfor)
+VALUES (7,2,1,'2022-03-20');
 
-INSERT or REPLACE INTO bookings (id,booker_id,dj_id)
-VALUES (8,4,2);
+INSERT or REPLACE INTO bookings (id,booker_id,dj_id,bookedfor)
+VALUES (8,4,2,'2022-03-26');
