@@ -6,20 +6,13 @@
     <p id="currentDj">{{dj}}</p>
     <div class="month">
         <ul>
-    <li class="prev">&#10094;</li>
-        <li class="next">&#10095;</li>
-        <li>August<br><span style="font-size:18px">2021</span></li>
+        <li class="prev" onclick="previousMonth()">&#10094;</li>
+        <li class="next" onclick="nextMonth()">&#10095;</li>
+        <li id = "monthYear"></li>
         </ul>
     </div>
+
     <div class="calendar">
-        <div class="month">
-            <i class="fas fa-angle-left prev"></i>
-            <div class="date">
-            <h1></h1>
-            <p></p>
-            </div>
-            <i class="fas fa-angle-right next"></i>
-        </div>
     </div>
         <ul class="daynames">
             <li>Mo</li>

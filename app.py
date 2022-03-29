@@ -1,13 +1,28 @@
-from datetime import datetime
 from flask import Flask,render_template,request,session,redirect, url_for
-import datetime
-#from flask.ext.session import Session
-from werkzeug.wrappers import CommonRequestDescriptorsMixin, Request
+
 from forms import LoginForm
-from flask.cli import with_appcontext
-import sqlite3
+
 import db
-import user
+
+
+#yy-mm-dd
+
+def validateDate(date):
+    date = date.split(date,"-")
+    year = date[0]
+    month = date [1]
+    day = date[2]
+
+    if year < 1000 or year > 3000 or month == 0 or month > 12:
+        return False
+
+    monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ]
+
+    #Adjust for leap years
+    if((year % 400 == 0) or (year % 100 != 0) and (year % 4 == 0)):   
+        monthLength[1] = 29
+
+    return day > 0 and day <= monthLength[month - 1]
 
 
 def create_app():
@@ -65,11 +80,13 @@ def  get_confirmbook():
         dj = request.args['dj']
         date = request.args['date']
         id = session["userinfo"]["id"]
+        if not validateDate(date):
+            return(redirect(url_for('get_home',loggedIn = True )))
         dj = db.getUser(dj)
         dj = dj[0]
         print((id,dj,date))
         print(db.createBookingid(id,dj,date))
-        return(redirect(url_for('get_home',loggedIn = False )))
+        return(redirect(url_for('get_home',loggedIn = True )))
     else:
         return(redirect(url_for('get_home',loggedIn = False )))
 
@@ -117,8 +134,6 @@ def get_login():
                     "genres": djInfo[3],
                 }
                 session['userinfo'] = userInfo
-                #print(session['userinfo'] )
-                #users[username] = user.dj(username,userInfo[1],djInfo[2],djInfo[3])
             else:
                 userInfo = {
                     "type" : userInfo[3],
@@ -134,12 +149,12 @@ def get_login():
 def get_profile():
     if  'userinfo' in session:
         if session['userinfo']['type'] == 'dj':
-            bookings = db.db_getDJBookings(session['userinfo']['id'])
+            bookings = db.getDJBookings(session['userinfo']['id'])
             print("here buddy")
             print(session['userinfo']['id'])
             print(bookings)
         elif (session['userinfo']['type'] == 'customer'):
-            bookings = db.db_getCustomerBookings(session['userinfo']['id'])
+            bookings = db.getCustomerBookings(session['userinfo']['id'])
         else:
             bookings = db.getAllBookings()
         
