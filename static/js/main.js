@@ -21,15 +21,12 @@ function createCalender(){
     console.log(currentMonth,currentYear)
     let days = "";
     let day = new Date(currentYear, currentMonth,0).getDay();
-    console.log(day)
     for (let i = 0; i < day; i++){
         days += `<li style ="width: 13.6%;"> ____________ </li>`;
     }
-    console.log("here")
-    console.log('curdate: ',currentDate)
     for (let i = 1; i <= daysInMonth; i++) {
         console.log('also here')
-        if (i == currentDate){
+        if (i == 2){
             
             console.log('set current')
             days += `<li class = "current" onclick = "selectdate(this)">${i}</li>`;
@@ -54,11 +51,17 @@ function selectdate(element){
 }
 
 function nextMonth(){
+    if (currentMonth == 11) {
+        return
+    }
     currentMonth++;
     createCalender();
 }
 
 function previousMonth(){
+    if (currentMonth == 0) {
+        return
+    }
     currentMonth--;
     createCalender();
 }
