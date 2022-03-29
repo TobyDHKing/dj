@@ -8,10 +8,10 @@ import db
 #yy-mm-dd
 
 def validateDate(date):
-    date = date.split(date,"-")
-    year = date[0]
-    month = date [1]
-    day = date[2]
+    date = date.split("-")
+    year = int(date[0])
+    month = int(date[1])
+    day = int(date[2])
 
     if year < 1000 or year > 3000 or month == 0 or month > 12:
         return False
@@ -83,9 +83,10 @@ def  get_confirmbook():
         if not validateDate(date):
             return(redirect(url_for('get_home',loggedIn = True )))
         dj = db.getUser(dj)
-        dj = dj[0]
-        print((id,dj,date))
-        print(db.createBookingid(id,dj,date))
+        dj = db.getDJ(dj[0])
+
+        print((id,dj[0],date))
+        print(db.createBookingid(id,dj[0],date))
         return(redirect(url_for('get_home',loggedIn = True )))
     else:
         return(redirect(url_for('get_home',loggedIn = False )))
