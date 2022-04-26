@@ -7,7 +7,7 @@ import db
 
 #yy-mm-dd
 
-def validateDate(date):
+def validateDate(date): #checks if date is possible, then returns bool
     date = date.split("-")
     year = int(date[0])
     month = int(date[1])
@@ -18,8 +18,7 @@ def validateDate(date):
 
     monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ]
 
-    #Adjust for leap years
-    if((year % 400 == 0) or (year % 100 != 0) and (year % 4 == 0)):   
+    if((year % 400 == 0) or (year % 100 != 0) and (year % 4 == 0)): # allow for leap years
         monthLength[1] = 29
 
     return day > 0 and day <= monthLength[month - 1]
@@ -40,34 +39,25 @@ app.config.update(
     DATABASE = "djapp.db",
 )
 
-@app.route('/set/')
-def set():
-    session['username'] = 'value'
-    return 'ok'
-
-@app.route('/get/')
-def get():
-    return session.get('key', 'not set')
-
-@app.route('/book')
+@app.route('/book') 
 def get_book():
-    djs = db.getDJs()
-    djList = []
-    print(djs)
-    for i in djs:
-        
-        user = db.getUserId(i[1])
+    if  'userinfo' in session:
+        djs = db.getDJs() # get all djs
+        djList = []
+        print(djs)
+        for i in djs: #generate dj list into array with needed data
+            user = db.getUserId(i[1])
+            arr = [i[2],i[3],user[1]]
+            djList += [arr]
 
-        arr = [i[2],i[3],user[1]]
-        djList += [arr]
-        print(i)
-    print(djList)
-    return(render_template('book.html', djList = djList))
+        return(render_template('book.html',loggedIn = True, djList = djList))
+    else:
+        return(redirect(url_for('get_home',loggedIn = False ))) #dont allow them on the page if not logged in
 
 @app.route('/book/confirm')
 def  get_confirm():
     if  'userinfo' in session:
-        dj = request.args['dj']
+        dj = request.args['dj'] #get the dj from client for them to book
 
         return(render_template("bookconfirm.html",loggedIn = True , dj = dj))
 
@@ -77,16 +67,16 @@ def  get_confirm():
 @app.route('/book/confirm/book')
 def  get_confirmbook():
     if  'userinfo' in session:
-        dj = request.args['dj']
-        date = request.args['date']
-        id = session["userinfo"]["id"]
-        if not validateDate(date):
-            return(redirect(url_for('get_home',loggedIn = True )))
-        dj = db.getUser(dj)
-        dj = db.getDJ(dj[0])
+        dj = request.args['dj'] #dj to be booked
+        date = request.args['date'] #date that  is booked
+        id = session["userinfo"]["id"] #clients id to be inserted in db
 
-        print((id,dj[0],date))
-        print(db.createBookingid(id,dj[0],date))
+        if not validateDate(date): #if date not valid then return home
+            return(redirect(url_for('get_home',loggedIn = True )))
+
+        dj = db.getUser(dj)# get user from username
+        dj = db.getDJ(dj[0])# get dj from user id
+
         return(redirect(url_for('get_home',loggedIn = True )))
     else:
         return(redirect(url_for('get_home',loggedIn = False )))
@@ -94,7 +84,7 @@ def  get_confirmbook():
 @app.route('/signout')  
 def  get_signout():
     if  'userinfo' in session:
-        session.pop("userinfo")
+        session.pop("userinfo") #remove userinfo from session
         return(redirect(url_for('get_home',loggedIn = False)))
 
 
@@ -115,17 +105,17 @@ def get_login():
             return (redirect(url_for('get_home')))
         username = request.form.get('username')
         password = request.form.get('password')
-        print( username, password)
-        form = LoginForm(username,password)
+        
+        form = LoginForm(username,password) #create form object
         userInfo = db.getUser(username = username)
-        if userInfo:
-            correctPass = (userInfo[2] == password)
-        print(userInfo)
-        if form.validateAll() == False or not userInfo or not correctPass:
-            print("login error")
-            return(render_template('login.html',error="Error, Invalid Username or Password"))
+
+        if userInfo: #db function refurn false if failed to retrieve data, checked this here
+            correctPass = (userInfo[2] == password) #see if password is the same
+
+        if form.validateAll() == False or not userInfo or not correctPass: #validate form, check if userinfo is valid and check if password is correct.
+            return(render_template('login.html',error="Error, Invalid Username or Password")) # error is returned if not logged in and added to webpage
         else:
-            if userInfo[3] == 'dj':
+            if userInfo[3] == 'dj': #store different data on the client for the different users
                 djInfo = db.getDJ(userInfo[0])
                 userInfo = {
                     "type" : "dj",
@@ -144,26 +134,21 @@ def get_login():
                 session['userinfo'] = userInfo
             return(redirect(url_for('get_home')))
 
-    return(render_template('login.html',error=""))
+    return(render_template('login.html',error="")) 
 
 @app.route('/profile')
 def get_profile():
     if  'userinfo' in session:
-        if session['userinfo']['type'] == 'dj':
+        bookings = []
+
+        if session['userinfo']['type'] == 'dj': #if user is dj show the bookings that book them
             bookings = db.getDJBookings(session['userinfo']['id'])
-            print("here buddy")
-            print(session['userinfo']['id'])
-            print(bookings)
-        elif (session['userinfo']['type'] == 'customer'):
+        elif (session['userinfo']['type'] == 'customer'): #if customer show the bookings they have made
             bookings = db.getCustomerBookings(session['userinfo']['id'])
         else:
-            bookings = db.getAllBookings()
+            bookings = db.getAllBookings() #else show all of the bookling make
         
-        if not bookings :
-            bookings = []
-
         return(render_template('profile.html',user = session['userinfo'],loggedIn = True, bookings = bookings))
-
     else:
         return(render_template('login.html',error=""))
 
@@ -172,5 +157,3 @@ if __name__ == '__main__':
     app.config['TEMPLATES_AUTO_RELOAD'] = True
     app.config['FLASK_DEBUG'] = 1
     app.run(debug=True)
-
-

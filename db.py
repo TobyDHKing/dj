@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 import sqlite3
 import click
 from flask import current_app
@@ -14,7 +13,6 @@ def get_db():
                 current_app.config['DATABASE'] )
         except Exception as e:
             print(e)
-        #db.row_factory = sqlite3.Row
 
     return db
 
@@ -47,7 +45,7 @@ def init_db():
     db.commit()
 
 
-@click.command('init-db')
+@click.command('init-db')#creates console command 'init-db'
 @with_appcontext
 
 def init_command():
@@ -57,8 +55,7 @@ def init_command():
     testdata_db()
     db = get_db()
     cur = db.cursor()
-    for row in cur.execute('SELECT * FROM users'):
-        print(row)
+
 
 def init_app(app):
     print("this ran")
@@ -128,7 +125,6 @@ def getDJBookings(id):
     cur.execute("SELECT * FROM bookings where dj_id = (?)", [id])
     try: bookings = list(cur.fetchall()) 
     except: return False
-    print(bookings)
     return bookings
 
 def getAllBookings():
